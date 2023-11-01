@@ -15,6 +15,10 @@ class Player(pg.sprite.Sprite):
         self.image = self.down[1]
         self.rect = self.image.get_rect()
         self.rect.center = position
+        self.hitbox = pg.Rect(self.x + 50, self.y + 80, 50, 50)
+
+    def shoot(self):
+        pass
 
     def animation(self):
         self.up = []
@@ -67,6 +71,8 @@ class Player(pg.sprite.Sprite):
                 self.image = self.down[1]
             elif self.direction == "stop_left":
                 self.image = self.down[1]
+    
+        self.hitbox.topleft = (self.x + 50, self.y + 80)
         
         
         
@@ -98,5 +104,6 @@ class Player(pg.sprite.Sprite):
 
     def render(self,screen):
         #screen.blit(self.pj, (self.x,self.y))
+        pg.draw.rect(screen, ("red"), self.hitbox, 2)
         pass
         

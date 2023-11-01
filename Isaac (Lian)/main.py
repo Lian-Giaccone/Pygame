@@ -3,6 +3,8 @@ import sys
 from settings import *
 from map import *
 from pj import *
+from enemy import *
+from projectile import *
 
 class Game:
     def __init__(self) -> None:
@@ -11,9 +13,11 @@ class Game:
         self.clock = pg.time.Clock()
         self.map = Map()
         self.player = Player((560,350))
+        self.enemy = Enemy((400,300))
         self.key_pressed = pg.key.get_pressed()
         self.group_sprites = pg.sprite.Group()
-        self.group_sprites.add(self.player)
+        self.group_sprites.add(self.player, self.enemy)
+        
 
     def run(self):
         while True:
@@ -44,6 +48,14 @@ class Game:
         self.screen.blit(mapa, (0,0))
         self.map.render(self.screen)
         self.group_sprites.draw(self.screen)
+        #self.group_sprites.draw(self.player.hitbox)
+        #self.player.render(self.screen)
+        for sprite in self.group_sprites.sprites():
+            if type(sprite) == Player:
+                sprite.hitbox.x = sprite.rect.x + 50
+                sprite.hitbox.y = sprite.rect.y + 80
+                print(sprite.hitbox)
+                pg.draw.rect(self.screen, ("red"), sprite.hitbox, 2)
 
         pg.display.flip()
 
